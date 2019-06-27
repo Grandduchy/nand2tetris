@@ -15,4 +15,24 @@ CHIP Mux {
 
     PARTS:
     // Put your code here:
+    // Using the truth table def of mux from disjunctive normal form
+    
+    Not(in=a, out=notA);
+    Not(in=b, out=notB);
+    Not(in=sel, out=notC);
+
+    And(a=a, b=b, out=aAndB);
+    And(a=b, b=sel, out=bAndC);
+    And(a=b, b=notC, out=bAndNotC);
+    And(a=notB, b=notC, out=notBAndNotC);
+
+    And(a=notA, b=bAndC, out=clause1);
+    And(a=a, b=bAndNotC, out=clause2);
+    And(a=aAndB, b=sel, out=clause3);
+    And(a=a, b=notBAndNotC, out=clause4);
+    // combine with ors
+    Or(a=clause1, b=clause2, out=orClause);
+    Or(a=orClause, b=clause3, out=orClause2);
+    Or(a=orClause2, b=clause4, out=out);
+	
 }
